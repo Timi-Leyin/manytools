@@ -49,4 +49,10 @@ export default [
     icon: SolarIconSet.Crop,
     category: "image",
   },
+  {
+    title: "Random File Creator",
+    route: "/tools/random-file-creator",
+    icon: SolarIconSet.File,
+    category: "utility",
+  },
 ] satisfies Tool[];

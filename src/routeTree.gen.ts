@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ToolsWordCounterImport } from './routes/tools/word-counter'
 import { Route as ToolsVideoTrimmerImport } from './routes/tools/video-trimmer'
+import { Route as ToolsRandomFileCreatorImport } from './routes/tools/random-file-creator'
 import { Route as ToolsLoremIpsumImport } from './routes/tools/lorem-ipsum'
 import { Route as ToolsImagePaletteGeneratorImport } from './routes/tools/image-palette-generator'
 import { Route as ToolsImageCropperImport } from './routes/tools/image-cropper'
@@ -36,6 +37,12 @@ const ToolsWordCounterRoute = ToolsWordCounterImport.update({
 const ToolsVideoTrimmerRoute = ToolsVideoTrimmerImport.update({
   id: '/tools/video-trimmer',
   path: '/tools/video-trimmer',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ToolsRandomFileCreatorRoute = ToolsRandomFileCreatorImport.update({
+  id: '/tools/random-file-creator',
+  path: '/tools/random-file-creator',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -104,6 +111,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsLoremIpsumImport
       parentRoute: typeof rootRoute
     }
+    '/tools/random-file-creator': {
+      id: '/tools/random-file-creator'
+      path: '/tools/random-file-creator'
+      fullPath: '/tools/random-file-creator'
+      preLoaderRoute: typeof ToolsRandomFileCreatorImport
+      parentRoute: typeof rootRoute
+    }
     '/tools/video-trimmer': {
       id: '/tools/video-trimmer'
       path: '/tools/video-trimmer'
@@ -129,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/tools/image-cropper': typeof ToolsImageCropperRoute
   '/tools/image-palette-generator': typeof ToolsImagePaletteGeneratorRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/random-file-creator': typeof ToolsRandomFileCreatorRoute
   '/tools/video-trimmer': typeof ToolsVideoTrimmerRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
 }
@@ -139,6 +154,7 @@ export interface FileRoutesByTo {
   '/tools/image-cropper': typeof ToolsImageCropperRoute
   '/tools/image-palette-generator': typeof ToolsImagePaletteGeneratorRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/random-file-creator': typeof ToolsRandomFileCreatorRoute
   '/tools/video-trimmer': typeof ToolsVideoTrimmerRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
 }
@@ -150,6 +166,7 @@ export interface FileRoutesById {
   '/tools/image-cropper': typeof ToolsImageCropperRoute
   '/tools/image-palette-generator': typeof ToolsImagePaletteGeneratorRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/random-file-creator': typeof ToolsRandomFileCreatorRoute
   '/tools/video-trimmer': typeof ToolsVideoTrimmerRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
 }
@@ -162,6 +179,7 @@ export interface FileRouteTypes {
     | '/tools/image-cropper'
     | '/tools/image-palette-generator'
     | '/tools/lorem-ipsum'
+    | '/tools/random-file-creator'
     | '/tools/video-trimmer'
     | '/tools/word-counter'
   fileRoutesByTo: FileRoutesByTo
@@ -171,6 +189,7 @@ export interface FileRouteTypes {
     | '/tools/image-cropper'
     | '/tools/image-palette-generator'
     | '/tools/lorem-ipsum'
+    | '/tools/random-file-creator'
     | '/tools/video-trimmer'
     | '/tools/word-counter'
   id:
@@ -180,6 +199,7 @@ export interface FileRouteTypes {
     | '/tools/image-cropper'
     | '/tools/image-palette-generator'
     | '/tools/lorem-ipsum'
+    | '/tools/random-file-creator'
     | '/tools/video-trimmer'
     | '/tools/word-counter'
   fileRoutesById: FileRoutesById
@@ -191,6 +211,7 @@ export interface RootRouteChildren {
   ToolsImageCropperRoute: typeof ToolsImageCropperRoute
   ToolsImagePaletteGeneratorRoute: typeof ToolsImagePaletteGeneratorRoute
   ToolsLoremIpsumRoute: typeof ToolsLoremIpsumRoute
+  ToolsRandomFileCreatorRoute: typeof ToolsRandomFileCreatorRoute
   ToolsVideoTrimmerRoute: typeof ToolsVideoTrimmerRoute
   ToolsWordCounterRoute: typeof ToolsWordCounterRoute
 }
@@ -201,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageCropperRoute: ToolsImageCropperRoute,
   ToolsImagePaletteGeneratorRoute: ToolsImagePaletteGeneratorRoute,
   ToolsLoremIpsumRoute: ToolsLoremIpsumRoute,
+  ToolsRandomFileCreatorRoute: ToolsRandomFileCreatorRoute,
   ToolsVideoTrimmerRoute: ToolsVideoTrimmerRoute,
   ToolsWordCounterRoute: ToolsWordCounterRoute,
 }
@@ -220,6 +242,7 @@ export const routeTree = rootRoute
         "/tools/image-cropper",
         "/tools/image-palette-generator",
         "/tools/lorem-ipsum",
+        "/tools/random-file-creator",
         "/tools/video-trimmer",
         "/tools/word-counter"
       ]
@@ -238,6 +261,9 @@ export const routeTree = rootRoute
     },
     "/tools/lorem-ipsum": {
       "filePath": "tools/lorem-ipsum.tsx"
+    },
+    "/tools/random-file-creator": {
+      "filePath": "tools/random-file-creator.tsx"
     },
     "/tools/video-trimmer": {
       "filePath": "tools/video-trimmer.tsx"
