@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { createFileRoute } from "@tanstack/react-router";
@@ -10,6 +10,7 @@ import {
   generateTextFile,
   generateZipFile,
 } from "@/utils/random-file-creator/generate-content";
+import { triggerWorker, worker } from "@/worker";
 
 export const Route = createFileRoute("/tools/random-file-creator")({
   component: RouteComponent,
@@ -121,12 +122,11 @@ export default function RouteComponent() {
   };
 
   useEffect(() => {
-  const max = getSliderMax();
+    const max = getSliderMax();
     if (fileSize > max) {
       setFileSize(Math.floor(max / 2));
     }
   }, [sizeUnit]);
-
 
   const getFileContentDescription = (): string => {
     switch (fileType) {
@@ -144,6 +144,12 @@ export default function RouteComponent() {
     }
   };
 
+  const handleTestWorker = () => {
+    triggerWorker("test", {
+      message: "Hello from the main thread!",
+    });
+  };
+
   return (
     <ContentLayout title="Random File Creator">
       <div className="space-y-6">
@@ -156,6 +162,7 @@ export default function RouteComponent() {
           </p>
         </div>
 
+        <Button onClick={handleTestWorker}>Test Worker Func</Button>
         <div>
           <label className="block mb-2">File Name</label>
           <Input
