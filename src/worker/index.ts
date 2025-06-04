@@ -1,20 +1,9 @@
-import Worker from "web-worker";
+// import Worker from "web-worker";
 
-const url = new URL("./worker.js", import.meta.url);
-export const worker = new Worker(url, { type: "module" });
+export const url = new URL("./worker.js", import.meta.url);
+// export const worker = new Worker(url, { type: "module" });
 
 export interface WorkerEvent {
-  type: "test" | "generate";
+  type: "test" | "generate" | "cpu_processing:thread" | "cpu_processing:main";
   payload: any;
 }
-
-export const triggerWorker = (
-  type: WorkerEvent["type"],
-  payload: WorkerEvent["payload"]
-) => {
-  worker.postMessage({ type, payload });
-};
-
-worker.addEventListener("message",(ev)=>{
-    console.log("Response")
-})

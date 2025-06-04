@@ -10,7 +10,12 @@ import {
   generateTextFile,
   generateZipFile,
 } from "@/utils/random-file-creator/generate-content";
-import { triggerWorker, worker } from "@/worker";
+import {
+  createWorker,
+  getAvailableWorkers,
+  terminateWorker,
+  workers,
+} from "@/worker/pool";
 
 export const Route = createFileRoute("/tools/random-file-creator")({
   component: RouteComponent,
@@ -46,25 +51,6 @@ export default function RouteComponent() {
 
   const canvasRef = useRef<HTMLCanvasElement>(null!);
 
-  const generateRealisticContent = async (
-    sizeInBytes: number
-  ): Promise<Blob> => {
-    const type = fileType;
-    switch (type) {
-      case "text/plain":
-        return generateTextFile(sizeInBytes);
-      case "application/json":
-        return generateJsonFile(sizeInBytes);
-      case "application/zip":
-        return generateZipFile(sizeInBytes);
-      case "image/jpeg":
-      case "image/png":
-        return generateImageFile(sizeInBytes, type, canvasRef.current);
-      default:
-        return new Blob([generateRandomData(sizeInBytes)], { type });
-    }
-  };
-
   const createAndDownloadFile = async () => {
     const sizeInBytes = getSizeInBytes();
     if (sizeInBytes > 100 * 1024 * 1024) {
@@ -78,7 +64,10 @@ export default function RouteComponent() {
     }
 
     try {
-      const blob = await generateRealisticContent(sizeInBytes);
+      //   const blob = await generateRealisticContent(sizeInBytes);
+      const blob = await handleTestWorker();
+
+      if (!blob) return;
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -144,10 +133,35 @@ export default function RouteComponent() {
     }
   };
 
-  const handleTestWorker = () => {
-    triggerWorker("test", {
-      message: "Hello from the main thread!",
-    });
+  const handleTestWorker = async () => {
+    const availableWorker = getAvailableWorkers();
+    if (!availableWorker) {
+      console.warn("No available workers");
+      return;
+    }
+
+    const chunkSize = Math.ceil(getSizeInBytes() / availableWorker);
+    console.log(
+      `Processing ${getSizeInBytes()} bytes with ${availableWorker} workers (${chunkSize} bytes per worker)`
+    );
+
+    // await Promise.all(
+    //   new Array(1).fill(0).map(async () => {
+    //     const worker = createWorker();
+    //     if (!worker) return;
+    //     worker.busy = true;
+    //     worker.worker.postMessage({
+    //       type: "cpu_processing:thread",
+    //       payload: {
+    //         tool_type: "random-file-creator",
+    //         workerId: worker.id,
+    //         fileSize,
+    //         sizeInBytes: getSizeInBytes(),
+    //         fileType,
+    //       },
+    //     });
+    //   })
+    // );
   };
 
   return (
@@ -181,7 +195,7 @@ export default function RouteComponent() {
               <input
                 type="range"
                 min={1}
-                max={getSliderMax()}
+                // max={getSliderMax()}
                 value={fileSize}
                 onChange={(e) => setFileSize(parseInt(e.target.value))}
                 className="w-full"
