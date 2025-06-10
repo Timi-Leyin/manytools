@@ -149,8 +149,7 @@ export const WorkerProvider = ({ children, maxConcurrentWorkers }: WorkerProvide
     const newCount = Math.max(1, Math.min(count, navigator.hardwareConcurrency || 4));
     maxWorkers.current = newCount;
     
-    // If we're reducing the max workers, terminate excess workers that are not busy
-    if (workers.current.length > newCount) {
+   if (workers.current.length > newCount) {
       const workersToTerminate = workers.current
         .filter(w => !w.isBusy)
         .slice(newCount - workers.current.filter(w => w.isBusy).length);

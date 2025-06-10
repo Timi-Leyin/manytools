@@ -118,38 +118,7 @@ function RouteComponent() {
           </span>
         </div>
         
-        {/* Worker Management Section */}
-        <div className="border rounded-lg p-4 bg-gray-50">
-          <h3 className="font-medium mb-3">Worker Management</h3>
-          <div className="space-y-3">
-            <div className="flex gap-4 items-center">
-              <label className="font-medium">Max Concurrent Workers:</label>
-              <input
-                type="range"
-                min="1"
-                max={navigator.hardwareConcurrency || 4}
-                value={getMaxWorkerCount()}
-                onChange={(e) => setMaxWorkerCount(Number(e.target.value))}
-                className="w-32"
-              />
-              <span className="font-mono">{getMaxWorkerCount()}</span>
-            </div>
-            <div className="grid grid-cols-3 gap-4 text-sm">
-              <div className="flex flex-col items-center p-2 bg-white rounded border">
-                <span className="font-medium">Active Workers</span>
-                <span className="text-lg font-mono text-blue-600">{getActiveWorkerCount()}</span>
-              </div>
-              <div className="flex flex-col items-center p-2 bg-white rounded border">
-                <span className="font-medium">Queue Size</span>
-                <span className="text-lg font-mono text-orange-600">{getQueueSize()}</span>
-              </div>
-              <div className="flex flex-col items-center p-2 bg-white rounded border">
-                <span className="font-medium">Max Workers</span>
-                <span className="text-lg font-mono text-green-600">{getMaxWorkerCount()}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+   
 
         <Button
           onClick={handleGenerate}
@@ -179,9 +148,8 @@ function RouteComponent() {
             </div>
           </div>
         )}
-
-        {/* Worker Status Display */}
-        {(generating || getActiveWorkerCount() > 0 || getQueueSize() > 0) && (
+        
+        {/* {(generating || getActiveWorkerCount() > 0 || getQueueSize() > 0) && (
           <div className="text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded p-2">
             <div className="font-medium mb-1">Worker Status:</div>
             <div className="grid grid-cols-1 gap-1">
@@ -205,7 +173,7 @@ function RouteComponent() {
               )}
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="text-xs text-gray-500">
           Generated files will have exact byte sizes. Image file size is

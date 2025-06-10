@@ -7,12 +7,12 @@ export interface FileGenerationOptions {
 }
 
 export function useFileGenerator() {
-  const { 
-    executeTask, 
-    getActiveWorkerCount, 
-    getMaxWorkerCount, 
-    setMaxWorkerCount, 
-    getQueueSize 
+  const {
+    executeTask,
+    getActiveWorkerCount,
+    getMaxWorkerCount,
+    setMaxWorkerCount,
+    getQueueSize,
   } = useWorker();
 
   const generateTextFile = async (
@@ -31,13 +31,54 @@ export function useFileGenerator() {
       }
     }
 
-    const blob = await executeTask("randomText", { size }, onProgress);
+    if (size > 1024 * 1024 * 50 && onProgress) {
+      const chunkSize = 1024 * 1024 * 50;
+      const totalChunks = Math.ceil(size / chunkSize);
+      let completedChunks = 0;
+      const chunks: Blob[] = [];
 
-    if (filename) {
-      downloadBlob(blob, filename);
+      for (let i = 0; i < totalChunks; i++) {
+        const currentChunkSize = Math.min(chunkSize, size - i * chunkSize);
+
+        const chunk = await executeTask(
+          "randomText",
+          { size: currentChunkSize },
+          (progress) => {
+            if (onProgress) {
+              onProgress({
+                done: progress.done + completedChunks * chunkSize,
+                total: size,
+              });
+            }
+          }
+        );
+
+        chunks.push(chunk);
+        completedChunks++;
+
+        // Update progress after chunk completion
+        if (onProgress) {
+          onProgress({
+            done: completedChunks * chunkSize,
+            total: size,
+          });
+        }
+      }
+
+      const combinedBlob = new Blob(chunks);
+      if (filename) {
+        downloadBlob(combinedBlob, filename);
+      }
+      return combinedBlob;
+    } else {
+      const blob = await executeTask("randomText", { size }, onProgress);
+
+      if (filename) {
+        downloadBlob(blob, filename);
+      }
+
+      return blob;
     }
-
-    return blob;
   };
 
   const generateImageFile = async (
