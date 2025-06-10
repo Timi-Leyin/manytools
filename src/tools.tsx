@@ -61,4 +61,10 @@ export default [
     icon: SolarIconSet.TextFieldFocus,
     category: "text",
   },
+  {
+    title: "Generate Random File Size",
+    route: "/random-file-size",
+    icon: SolarIconSet.FileCorrupted,
+    category: "utility",
+  },
 ] satisfies Tool[];
