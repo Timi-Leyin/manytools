@@ -174,7 +174,7 @@ function RouteComponent() {
               <div className="w-full">
                 <div
                   {...getRootProps()}
-                  className="w-full border border-purple-500 border-dotted h-[70vh] rounded-2xl bg-purple-50 flex items-center justify-center cursor-pointer relative"
+                  className="w-full border border-border border-dotted h-[70vh] rounded-2xl bg-accent/5 flex items-center justify-center cursor-pointer relative"
                 >
                   {image && (
                     <button
@@ -190,7 +190,7 @@ function RouteComponent() {
                   <input {...getInputProps()} />
                   {loading ? (
                     <Loader2
-                      className="animate-spin text-purple-500"
+                      className="animate-spin"
                       size={40}
                     />
                   ) : image ? (
@@ -244,7 +244,7 @@ function RouteComponent() {
                 <Button
                   key={preset.name}
                   onClick={() => setCrop(preset.crop)}
-                  className="size-20 text-xs text-center !bg-purple-100 !text-purple-500 border !border-purple-500 border-dotted hover:!bg-purple-200 flex items-center justify-center"
+                  className="size-20 text-xs text-center !bg-accent !text-accent-foreground border !border-border border-dotted hover:!bg-accent/80 flex items-center justify-center"
                 >
                   {preset.name}
                 </Button>

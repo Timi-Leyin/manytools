@@ -23,19 +23,19 @@ function RouteComponent() {
       <div className="flex gap-10">
         <div className="w-full space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <div className="border border-purple-500 rounded-lg p-4 bg-purple-500/5">
+            <div className="border border-border rounded-lg p-4 bg-accent/5">
               <textarea
                 value={text1}
                 onChange={(e) => setText1(e.target.value)}
-                className="w-full h-[calc(100vh-400px)] border-none outline-none resize-none"
+                className="w-full h-[calc(100vh-400px)] border-none outline-none resize-none bg-transparent"
                 placeholder="Enter first text here..."
               />
             </div>
-            <div className="border border-purple-500 rounded-lg p-4 bg-purple-500/5">
+            <div className="border border-border rounded-lg p-4 bg-accent/5">
               <textarea
                 value={text2}
                 onChange={(e) => setText2(e.target.value)}
-                className="w-full h-[calc(100vh-400px)] border-none outline-none resize-none"
+                className="w-full h-[calc(100vh-400px)] border-none outline-none resize-none bg-transparent"
                 placeholder="Enter second text here..."
               />
             </div>
@@ -44,7 +44,7 @@ function RouteComponent() {
             Compare Texts
           </Button>
           {diffResult.length > 0 && (
-            <div className="border border-purple-500 rounded-lg p-4 bg-purple-500/5">
+            <div className="border border-border rounded-lg p-4 bg-accent/5">
               <div className="prose max-w-none font-mono">
                 {diffResult.map((part, index) => {
                   const lines = part.value
@@ -55,13 +55,13 @@ function RouteComponent() {
                       key={`${index}-${lineIndex}`}
                       className={`flex items-start gap-2 ${
                         part.added
-                          ? "bg-green-200 text-green-800"
+                          ? "bg-green-200 text-green-800 dark:bg-green-950 dark:text-green-200"
                           : part.removed
-                            ? "bg-red-200 text-red-800"
+                            ? "bg-red-200 text-red-800 dark:bg-red-950 dark:text-red-200"
                             : ""
                       }`}
                     >
-                      <span className="text-gray-500 select-none">
+                      <span className="text-gray-500 dark:text-gray-400 select-none">
                         {part.added ? "+" : part.removed ? "-" : " "}
                       </span>
                       <span>{line}</span>

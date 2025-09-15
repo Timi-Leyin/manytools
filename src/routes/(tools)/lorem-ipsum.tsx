@@ -52,10 +52,10 @@ function RouteComponent() {
   return (
     <ContentLayout title="Lorem Ipsum Generator">
       <div className="flex gap-10">
-        <div className="w-[70%] border border-purple-500 rounded-lg p-4 bg-purple-500/5">
+        <div className="w-[70%] border border-border rounded-lg p-4 bg-accent/5">
           <textarea
             value={result}
-            className="w-full h-[calc(100vh-400px)] border-none outline-none"
+            className="w-full h-[calc(100vh-400px)] border-none outline-none bg-transparent"
             readOnly
           ></textarea>
         </div>
@@ -72,7 +72,7 @@ function RouteComponent() {
             <select
               value={type}
               onChange={(e) => setType(e.target.value as any)}
-              className="border-2 border-purple-100 focus:border-purple-500 rounded-lg px-4 py-2 outline-none w-[50%]"
+              className="border-2 border-border focus:border-accent rounded-lg px-4 py-2 outline-none w-[50%] bg-background"
             >
               <option value="paragraphs">Paragraphs</option>
               <option value="sentences">Sentences</option>
@@ -88,7 +88,7 @@ function RouteComponent() {
               setCopied(true);
               setTimeout(() => setCopied(false), 1500);
             }}
-            className="w-full mt-2 !bg-purple-100 !text-purple-500 border !border-purple-500 border-dotted hover:!bg-purple-200 overflow-hidden relative h-10"
+            className="w-full mt-2 !bg-accent !text-accent-foreground border !border-border border-dotted hover:!bg-accent/80 overflow-hidden relative h-10"
           >
             <AnimatePresence mode="wait">
               <motion.span

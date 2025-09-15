@@ -1,8 +1,32 @@
 @import url(https://fonts.googleapis.com/css?family=Geist+Mono:100,200,300,regular,500,600,700,800,900);
 @import "tailwindcss";
 
+@layer base {
+  :root {
+    --background: white;
+    --foreground: #111112;
+    --accent: #18181B;
+    --accent-foreground: #fff;
+    --border: #e5e7eb49;
+  }
+
+  .dark {
+    --background: #111112;
+    --foreground: #ffffff;
+    --accent: #18181B;
+    --accent-foreground: #fff;
+    --border: rgba(255,255,255,0.1);
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
 body {
   font-family: "Geist Mono", monospace;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 button {

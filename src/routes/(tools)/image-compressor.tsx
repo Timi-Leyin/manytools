@@ -226,20 +226,20 @@ function RouteComponent() {
             {uploadLoading ? (
               <div className="flex flex-col items-center justify-center h-40">
                 <Loader2Icon
-                  className="animate-spin text-purple-500 mb-3"
+                  className="animate-spin mb-3"
                   size={40}
                 />
-                <p className="text-purple-600 font-medium">Loading image...</p>
+                <p className="font-medium">Loading image...</p>
               </div>
             ) : !image ? (
               <>
-                <div className="bg-purple-50 p-4 rounded-full mb-4">
-                  <Upload className="text-purple-500" size={24} />
+                <div className="bg-accent p-4 rounded-full mb-4">
+                  <Upload className="text-accent-foreground" size={24} />
                 </div>
-                <p className="font-medium text-gray-700">
+                <p className="font-medium">
                   Click to upload or drag and drop
                 </p>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm mt-1">
                   JPG, PNG or WEBP (max 200MB)
                 </p>
                 <input
@@ -308,7 +308,7 @@ function RouteComponent() {
                 <button
                   onClick={handleCompression}
                   disabled={loading}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white p-3 rounded font-medium flex items-center justify-center gap-x-2"
+                  className="w-full bg-accent hover:bg-accent/80 text-accent-foreground p-3 rounded font-medium flex items-center justify-center gap-x-2"
                 >
                   {loading ? (
                     <>
@@ -327,10 +327,10 @@ function RouteComponent() {
               {loading && !compressedImage && (
                 <div className="border rounded-lg p-8 flex flex-col items-center justify-center">
                   <Loader2Icon
-                    className="animate-spin text-purple-500 mb-3"
+                    className="animate-spin mb-3"
                     size={40}
                   />
-                  <p className="text-purple-600 font-medium">
+                  <p className="font-medium">
                     Compressing your image...
                   </p>
                 </div>
@@ -342,7 +342,7 @@ function RouteComponent() {
                     <p className="font-medium">Compressed Image</p>
                     <button
                       onClick={downloadCompressedImage}
-                      className="text-purple-600 flex items-center gap-x-1 text-sm hover:bg-purple-50 p-1 px-2 rounded"
+                      className="flex items-center gap-x-1 text-sm hover:bg-accent p-1 px-2 rounded"
                     >
                       <Download size={16} /> Download
                     </button>
@@ -363,9 +363,9 @@ function RouteComponent() {
                         {formatSize(compressedSize)}
                       </p>
                     </div>
-                    <div className="bg-purple-50 p-3 rounded">
-                      <p className="text-xs text-purple-600">Saved</p>
-                      <p className="font-medium text-purple-600">
+                    <div className="bg-accent p-3 rounded">
+                      <p className="text-xs">Saved</p>
+                      <p className="font-medium">
                         {calculateSavings()}
                       </p>
                     </div>
@@ -377,7 +377,7 @@ function RouteComponent() {
 
           {!image && !uploadLoading && (
             <div className="h-80 border rounded-lg flex items-center justify-center p-6">
-              <div className="text-center text-gray-500">
+              <div className="text-center">
                 <ImageIcon size={48} className="mx-auto mb-3 opacity-20" />
                 <p>Upload an image to see compression options</p>
               </div>
@@ -386,7 +386,7 @@ function RouteComponent() {
 
           {!image && uploadLoading && (
             <div className="h-80 border rounded-lg flex items-center justify-center p-6">
-              <div className="text-center text-purple-500">
+              <div className="text-center">
                 <Loader2Icon className="animate-spin mx-auto mb-3" size={48} />
                 <p>Loading your image...</p>
               </div>

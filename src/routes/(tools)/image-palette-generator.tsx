@@ -138,7 +138,7 @@ function RouteComponent() {
           <div className="w-[60%]">
             <div
               {...getRootProps()}
-              className="w-full border border-purple-500 border-dotted h-[70vh] rounded-2xl bg-purple-50 flex items-center justify-center cursor-pointer relative"
+              className="w-full border border-gray-700 border-dotted h-[70vh] rounded-2xl bg-gray-900 flex items-center justify-center cursor-pointer relative"
             >
               {image && (
                 <button
@@ -156,7 +156,7 @@ function RouteComponent() {
               <input {...getInputProps()} />
               {loading ? (
                 <Loader2Icon
-                  className="animate-spin text-purple-500"
+                  className="animate-spin text-gray-400"
                   size={40}
                 />
               ) : image ? (
@@ -179,13 +179,13 @@ function RouteComponent() {
                 <p className="text-2xl font-bold text-gray-800">Palette</p>
                 <div className="flex gap-x-[1px]">
                   <button
-                    className="bg-purple-500 text-white px-4 py-2 rounded-l-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gray-900 text-white px-4 py-2 rounded-l-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={colors.length === 0}
                   >
                     Export palette
                   </button>
                   <button
-                    className="bg-purple-500 text-white px-2 py-2 rounded-r-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gray-900 text-white px-2 py-2 rounded-r-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={colors.length === 0}
                   >
                     <ChevronDown />
@@ -218,7 +218,7 @@ function RouteComponent() {
                 </AnimatePresence>
                 {!!image && (
                   <button
-                    className="text-sm text-purple-500 flex items-center gap-x-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="text-sm flex items-center gap-x-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                     onClick={addNewColor}
                     disabled={
                       colors.length >= fullPalette.length || loading || !image

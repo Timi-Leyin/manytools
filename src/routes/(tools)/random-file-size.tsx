@@ -38,16 +38,16 @@ function RouteComponent() {
   const handleGenerate = async () => {
     setGenerating(true);
     setProgress(null);
-
     try {
-      const filename = `random-${fileType}-${formatFileSize(size).replace(/\s/g, "")}.${fileType === "text" ? "txt" : "png"}`;
-
+      const filename = `random-${fileType}-${formatFileSize(size).replace(/\s/g, "")}.${fileType === "text" ? "txt" : "jpg"}`;
       if (fileType === "text") {
         await generateTextFile(size, filename, {
-          onProgress: size > 1024 * 1024 * 50 ? setProgress : undefined, // Show progress for files >50MB
+          onProgress: size > 1024 * 1024 * 50 ? setProgress : undefined,
         });
       } else {
-        await generateImageFile(size, filename);
+        await generateImageFile(size, filename, {
+          onProgress: setProgress,
+        });
       }
     } catch (error) {
       if (SHOW_LOGS) {
@@ -77,20 +77,20 @@ function RouteComponent() {
 
   return (
     <ContentLayout title="Random File Size Generator">
-      <div className="max-w-xl mx-auto flex flex-col gap-6">
+      <div className="max-w-xl mx-auto flex flex-col gap-6 bg-background text-foreground border border-gray-800 rounded-lg p-6 shadow-lg">
         <div className="flex gap-4 items-center">
-          <label className="font-medium">File type:</label>
+          <label className="font-medium text-gray-200">File type:</label>
           <select
             value={fileType}
             onChange={(e) => setFileType(e.target.value as any)}
-            className="border rounded px-2 py-1"
+            className="border border-gray-700 rounded px-2 py-1 bg-gray-900 text-gray-100 focus:outline-none"
           >
             <option value="text">Text</option>
-            <option value="image">Image (PNG)</option>
+            <option value="image">Image (JPG)</option>
           </select>
         </div>
         <div className="flex gap-4 items-center">
-          <label className="font-medium">File size:</label>
+          <label className="font-medium text-gray-200">File size:</label>
           <input
             type="range"
             min={min}
@@ -98,7 +98,7 @@ function RouteComponent() {
             step={step}
             value={sliderValue}
             onChange={(e) => setSliderValue(Number(e.target.value))}
-            className="w-40"
+            className="w-40 accent-gray-600"
           />
           <select
             value={unit}
@@ -106,78 +106,44 @@ function RouteComponent() {
               setUnit(e.target.value as FileSizeUnit);
               setSliderValue(1);
             }}
-            className="border rounded px-2 py-1"
+            className="border border-gray-700 rounded px-2 py-1 bg-gray-900 text-gray-100 focus:outline-none"
           >
             <option value="B">Bytes</option>
             <option value="KB">KB</option>
             <option value="MB">MB</option>
             <option value="GB">GB</option>
           </select>
-          <span className="ml-2 font-mono">
+          <span className="ml-2 font-mono text-gray-400">
             {sliderValue} {label} ({formatFileSize(size)})
           </span>
         </div>
-        
-   
-
         <Button
           onClick={handleGenerate}
           disabled={generating}
-          className="w-full"
+          className="w-full bg-gray-900 text-white border border-gray-700 hover:bg-gray-800 hover:text-gray-100"
         >
           {generating ? "Generating..." : "Generate & Download"}
         </Button>
-
-        {/* Progress Display */}
         {progress && (
-          <div className="text-xs text-purple-700 bg-purple-50 border border-purple-200 rounded p-2">
+          <div className="text-xs text-gray-200 bg-gray-900 border border-gray-700 rounded p-2">
             <div>
-              Progress: {formatFileSize(progress.done)} /{" "}
-              {formatFileSize(progress.total)}
+              Progress: {formatFileSize(progress.done)} / {formatFileSize(progress.total)}
             </div>
-            <div className="w-full bg-purple-200 rounded-full h-2 mt-1">
+            <div className="w-full bg-gray-800 rounded-full h-2 mt-1">
               <div
-                className="bg-purple-600 h-2 rounded-full transition-all duration-300"
+                className="bg-gray-400 h-2 rounded-full transition-all duration-300"
                 style={{
                   width: `${Math.round((progress.done / progress.total) * 100)}%`,
                 }}
               ></div>
             </div>
-            <div className="text-center mt-1">
+            <div className="text-center mt-1 text-gray-400">
               {Math.round((progress.done / progress.total) * 100)}%
             </div>
           </div>
         )}
-        
-        {/* {(generating || getActiveWorkerCount() > 0 || getQueueSize() > 0) && (
-          <div className="text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded p-2">
-            <div className="font-medium mb-1">Worker Status:</div>
-            <div className="grid grid-cols-1 gap-1">
-              {getActiveWorkerCount() > 0 && (
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                  <span>{getActiveWorkerCount()} worker(s) active</span>
-                </div>
-              )}
-              {getQueueSize() > 0 && (
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <span>{getQueueSize()} task(s) in queue</span>
-                </div>
-              )}
-              {!generating && getActiveWorkerCount() === 0 && getQueueSize() === 0 && (
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>All workers idle</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )} */}
-
         <div className="text-xs text-gray-500">
-          Generated files will have exact byte sizes. Image file size is
-          approximate due to PNG compression.
+          Generated files will have exact byte sizes. Image file size is approximate due to JPG compression.
         </div>
       </div>
     </ContentLayout>

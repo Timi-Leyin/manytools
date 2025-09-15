@@ -9,7 +9,7 @@ export const Input: React.FC<InputProps> = ({ className, ...props }) => {
   return (
     <input
       className={classNames(
-        "border-2 border-purple-100 rounded-lg px-4 py-2 focus:border-purple-500 focus:outline-none transition-all",
+        "border-2 border-border rounded-lg px-4 py-2 focus:border-accent focus:outline-none transition-all bg-background",
         className
       )}
       {...props}
