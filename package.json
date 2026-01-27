@@ -19,7 +19,7 @@
     "@tanstack/router-plugin": "^1.114.3",
     "color-name-list": "^11.7.0",
     "colorthief": "^2.6.0",
-    "diff": "^8.0.2",
+    "diff": "^8.0.3",
     "lorem-ipsum": "^2.0.8",
     "lucide-react": "^0.485.0",
     "motion": "^12.12.1",
